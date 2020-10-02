@@ -5,7 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class RightClickEvents implements Listener{
+public class RightClickEvents implements Listener {
     // Assigns a tag when right clicking an item.
     @EventHandler
     public void onRightClick(PlayerInteractEvent e) {
@@ -52,7 +52,14 @@ public class RightClickEvents implements Listener{
                 player.addScoreboardTag("au_useToggle");
                 break;
             }
-            case FEATHER: {
+            // Slot 2 Venting - MOVE FORWARD
+            case ARROW: {
+                player.addScoreboardTag("au_useMoveF");
+                player.addScoreboardTag("au_useMove");
+                break;
+            } // Slot 3 Venting - MOVE BACKWARD
+            case SPECTRAL_ARROW: {
+                player.addScoreboardTag("au_useMoveB");
                 player.addScoreboardTag("au_useMove");
                 break;
             }
