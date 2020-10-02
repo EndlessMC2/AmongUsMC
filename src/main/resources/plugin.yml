@@ -1,5 +1,5 @@
 name: AmongUsMC
-main: io.github.abhyuday10.InvLock
+main: io.github.abhyuday10.AmongUsMC
 version: "1.0"
 api: []
 api-version: 1.16

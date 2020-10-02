@@ -2,9 +2,10 @@ package io.github.abhyuday10.events;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class RightClickEvents {
+public class RightClickEvents implements Listener{
     // Assigns a tag when right clicking an item.
     @EventHandler
     public void onRightClick(PlayerInteractEvent e) {

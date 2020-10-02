@@ -2,9 +2,11 @@ package io.github.abhyuday10;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import io.github.abhyuday10.events.GenericEvents;
+import io.github.abhyuday10.events.RightClickEvents;
 
 import java.util.List;
 import java.util.Set;
@@ -27,7 +29,12 @@ public class AmongUsMC extends JavaPlugin {
     @Override
     public void onEnable() {
         getLogger().info("AmongUsMC Plugin has loaded.");
-        getServer().getPluginManager().registerEvents(new GenericEvents(), this);
+
+        // Register listeners
+        PluginManager manager = getServer().getPluginManager();
+        manager.registerEvents(new GenericEvents(), this);
+        manager.registerEvents(new RightClickEvents(), this);
+
         protocolManager = ProtocolLibrary.getProtocolManager();
         protocolManager.addPacketListener(
                 new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Server.ENTITY_EQUIPMENT) {
@@ -35,7 +42,9 @@ public class AmongUsMC extends JavaPlugin {
                     public void onPacketSending(PacketEvent event) {
                         Player player = event.getPlayer();
                         Set<String> playerTags = player.getScoreboardTags();
-                        if (playerTags.contains("au_inGame")) {
+                        if (playerTags.contains("au_dead") || playerTags.contains("au_vent")) {
+                            event.setCancelled(true);
+                        } else if (playerTags.contains(Tags.INGAME)) {
                             List<Pair<ItemSlot, ItemStack>> slotStacks = event.getPacket().getSlotStackPairLists()
                                     .read(0);
                             for (Pair<ItemSlot, ItemStack> pair : slotStacks) {
