@@ -4,6 +4,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import io.github.abhyuday10.events.GenericEvents;
+
 import java.util.List;
 import java.util.Set;
 
@@ -17,15 +19,15 @@ import com.comphenix.protocol.wrappers.Pair;
 import com.comphenix.protocol.wrappers.EnumWrappers.ItemSlot;
 
 /**
- * InvLock
+ * AmongUsMC
  */
-public class InvLock extends JavaPlugin {
+public class AmongUsMC extends JavaPlugin {
     private ProtocolManager protocolManager;
 
     @Override
     public void onEnable() {
-        getLogger().info("Enabled InvLock v1.0");
-        getServer().getPluginManager().registerEvents(new Listeners(), this);
+        getLogger().info("AmongUsMC Plugin has loaded.");
+        getServer().getPluginManager().registerEvents(new GenericEvents(), this);
         protocolManager = ProtocolLibrary.getProtocolManager();
         protocolManager.addPacketListener(
                 new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Server.ENTITY_EQUIPMENT) {
@@ -52,6 +54,6 @@ public class InvLock extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        getLogger().info("InvLock has been disabled :(");
+        getLogger().info("AmongUsMC Plugin has been disabled :(");
     }
 }

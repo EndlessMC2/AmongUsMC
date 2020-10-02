@@ -83,7 +83,11 @@
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
           <configuration>
+            <!-- Change next line or remove the <outputDirectory></outputDirectory> tag -->
             <outputDirectory>D:/MC Server/development/plugins</outputDirectory>
+            <excludes>
+              <exclude>ProtocolLib.jar</exclude>
+            </excludes>
           </configuration>
         </plugin>
         <plugin>
