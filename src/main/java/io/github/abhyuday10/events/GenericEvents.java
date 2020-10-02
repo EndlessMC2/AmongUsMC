@@ -55,7 +55,7 @@ public class GenericEvents implements Listener {
      * @param e event
      */
     @EventHandler
-    public void onPlayerMove(PlayerMoveEvent e) {
+    public void onFoodLevelChange(FoodLevelChangeEvent e) {
         Player player = e.getPlayer();
         if (player.getGameMode() == GameMode.ADVENTURE) {
             player.setFoodLevel(1);
