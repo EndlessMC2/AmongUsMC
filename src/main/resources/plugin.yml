@@ -1,0 +1,6 @@
+name: InvLock
+main: io.github.abhyuday10.InvLock
+version: "1.0"
+api: []
+api-version: 1.16
+depend: [ProtocolLib]
