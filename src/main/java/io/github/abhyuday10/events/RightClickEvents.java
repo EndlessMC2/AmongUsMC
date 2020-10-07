@@ -52,14 +52,8 @@ public class RightClickEvents implements Listener {
                 player.addScoreboardTag("au_useToggle");
                 break;
             }
-            // Slot 2 Venting - MOVE FORWARD
-            case ARROW: {
-                player.addScoreboardTag("au_useMoveF");
-                player.addScoreboardTag("au_useMove");
-                break;
-            } // Slot 3 Venting - MOVE BACKWARD
-            case SPECTRAL_ARROW: {
-                player.addScoreboardTag("au_useMoveB");
+            // Slot 2 Venting - MOVE
+            case FEATHER: {
                 player.addScoreboardTag("au_useMove");
                 break;
             }
