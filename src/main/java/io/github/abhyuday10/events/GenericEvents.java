@@ -3,8 +3,9 @@ package io.github.abhyuday10.events;
 import java.util.Set;
 
 import org.bukkit.GameMode;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -15,7 +16,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 
 import io.github.abhyuday10.Tags;
 
@@ -74,7 +74,9 @@ public class GenericEvents implements Listener {
     public void onPlayerInteract(PlayerInteractEvent e) {
         Player player = e.getPlayer();
         Set<String> playerTags = player.getScoreboardTags();
-        if (playerTags.contains(Tags.INGAME) && !playerTags.contains(Tags.INTASK)) {
+        BlockState blockState = e.getClickedBlock().getState();
+        Boolean isSign = blockState instanceof Sign;
+        if (playerTags.contains(Tags.INGAME) && !playerTags.contains(Tags.INTASK) && !isSign) {
             e.setCancelled(true);
         }
     }
