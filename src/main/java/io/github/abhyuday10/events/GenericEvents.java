@@ -17,6 +17,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
 import io.github.abhyuday10.Tags;
 
@@ -123,6 +124,20 @@ public class GenericEvents implements Listener {
         Entity entity = e.getDamager();
         Set<String> playerTags = entity.getScoreboardTags();
         if (playerTags.contains(Tags.INGAME) && !playerTags.contains(Tags.INTASK)) {
+            e.setCancelled(true);
+        }
+    }
+
+    /**
+     * Prevent moving stuff between offhand when in-game
+     * 
+     * @param e event
+     */
+    @EventHandler
+    public void onSwapHandItem(PlayerSwapHandItemsEvent e) {
+        Player player = e.getPlayer();
+        Set<String> playerTags = player.getScoreboardTags();
+        if (playerTags.contains(Tags.INGAME)) {
             e.setCancelled(true);
         }
     }
