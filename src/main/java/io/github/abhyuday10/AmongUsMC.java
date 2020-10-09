@@ -1,5 +1,6 @@
 package io.github.abhyuday10;
 
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
@@ -36,6 +37,12 @@ public class AmongUsMC extends JavaPlugin {
         manager.registerEvents(new RightClickEvents(), this);
 
         protocolManager = ProtocolLibrary.getProtocolManager();
+
+        // Code quality = 0
+        // need to reformat
+
+        // Listener to hide in hand item update packets
+        // NOTE: Must add tags before items are placed in hand for it to update properly
         protocolManager.addPacketListener(
                 new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Server.ENTITY_EQUIPMENT) {
                     @Override
@@ -58,6 +65,23 @@ public class AmongUsMC extends JavaPlugin {
 
                         }
                     };
+                });
+
+        // Listener that prevents ingame players from hearing sound when assigning map
+        // to player's offhand
+        protocolManager.addPacketListener(
+                new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Server.NAMED_SOUND_EFFECT) {
+                    @Override
+                    public void onPacketSending(PacketEvent event) {
+                        Player player = event.getPlayer();
+                        Set<String> playerTags = player.getScoreboardTags();
+                        if (playerTags.contains(Tags.INGAME) && event.getPacket().getSoundEffects()
+                                .readSafely(0) == Sound.ITEM_ARMOR_EQUIP_GENERIC) {
+
+                            event.setCancelled(true);
+
+                        }
+                    }
                 });
     }
 
