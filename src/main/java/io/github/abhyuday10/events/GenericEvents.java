@@ -76,7 +76,11 @@ public class GenericEvents implements Listener {
         Player player = e.getPlayer();
         Set<String> playerTags = player.getScoreboardTags();
         Block block = e.getClickedBlock();
-        if (playerTags.contains(Tags.INGAME) && !playerTags.contains(Tags.INTASK) && !(block.getState() instanceof Sign)) {
+        if (block == null) {
+            return;
+        }
+        if (playerTags.contains(Tags.INGAME) && !playerTags.contains(Tags.INTASK)
+                && !(block.getState() instanceof Sign)) {
             e.setCancelled(true);
         }
     }
