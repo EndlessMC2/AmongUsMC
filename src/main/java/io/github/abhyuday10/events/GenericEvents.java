@@ -3,7 +3,9 @@ package io.github.abhyuday10.events;
 import java.util.Set;
 
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Entity;
@@ -18,6 +20,7 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.material.Lever;
 
 import io.github.abhyuday10.Tags;
 
@@ -77,11 +80,24 @@ public class GenericEvents implements Listener {
         Player player = e.getPlayer();
         Set<String> playerTags = player.getScoreboardTags();
         Block block = e.getClickedBlock();
-        if (block == null) {
+        if (block == null) { // air
             return;
         }
-        if (playerTags.contains(Tags.INGAME) && !playerTags.contains(Tags.INTASK)
-                && !(block.getState() instanceof Sign)) {
+        // Cancel anything if the are ingame and not in a task, as long as its not a
+        // sign
+        if (playerTags.contains(Tags.INGAME) && !playerTags.contains(Tags.INTASK)) {
+
+            if (block.getState() instanceof Sign) // Allow interacting with signs
+                return;
+
+            if (block.getType() == Material.LEVER) { // Fine as long as lever is on specified blocks
+                Lever lever = (Lever) block.getState().getData();
+                Material leverOnBlock = block.getRelative(lever.getAttachedFace()).getType();
+                if (leverOnBlock == Material.OBSIDIAN || leverOnBlock == Material.REDSTONE_LAMP) {
+                    return;
+                }
+            }
+
             e.setCancelled(true);
         }
     }

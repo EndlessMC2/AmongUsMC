@@ -20,6 +20,7 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.Pair;
 import com.comphenix.protocol.wrappers.EnumWrappers.ItemSlot;
+import com.comphenix.protocol.wrappers.EnumWrappers.SoundCategory;
 
 /**
  * AmongUsMC
@@ -43,6 +44,7 @@ public class AmongUsMC extends JavaPlugin {
 
         // Listener to hide in hand item update packets
         // NOTE: Must add tags before items are placed in hand for it to update properly
+        
         protocolManager.addPacketListener(
                 new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Server.ENTITY_EQUIPMENT) {
                     @Override
@@ -83,7 +85,21 @@ public class AmongUsMC extends JavaPlugin {
                         }
                     }
                 });
-    }
+
+    //     protocolManager.addPacketListener(
+    //             new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Server.NAMED_SOUND_EFFECT) {
+    //                 @Override
+    //                 public void onPacketSending(PacketEvent event) {
+    //                     Player player = event.getPlayer();
+    //                     Set<String> playerTags = player.getScoreboardTags();
+    //                     if (playerTags.contains("au_dead")
+    //                             && event.getPacket().getSoundCategories().readSafely(0) == SoundCategory.PLAYERS) {
+    //                         event.setCancelled(true);
+
+    //                     }
+    //                 }
+    //             });
+    // }
 
     @Override
     public void onDisable() {
