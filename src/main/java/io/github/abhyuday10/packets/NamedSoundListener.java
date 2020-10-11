@@ -14,7 +14,7 @@ import io.github.abhyuday10.AmongUsMC;
 import io.github.abhyuday10.Tags;
 
 // Listener that prevents ingame players from hearing sound when assigning map
-// to player's offhand
+// to player's offhand1
 public class NamedSoundListener extends PacketAdapter {
     public NamedSoundListener(AmongUsMC plugin) {
         super(plugin, ListenerPriority.NORMAL, PacketType.Play.Server.NAMED_SOUND_EFFECT);
@@ -31,11 +31,4 @@ public class NamedSoundListener extends PacketAdapter {
 
         }
     }
-    
-    @Override
-    public void onPacketReceiving(PacketEvent event) {
-        
-    }
 }
-
-
