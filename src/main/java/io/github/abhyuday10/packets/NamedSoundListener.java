@@ -6,7 +6,10 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
+import com.comphenix.protocol.wrappers.EnumWrappers.SoundCategory;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
@@ -21,14 +24,24 @@ public class NamedSoundListener extends PacketAdapter {
     }
 
     @Override
-    public void onPacketSending(PacketEvent event) {
-        Player player = event.getPlayer();
-        Set<String> playerTags = player.getScoreboardTags();
+    public void onPacketSending(PacketEvent e) {
+        Player receiver = e.getPlayer();
+        Set<String> playerTags = receiver.getScoreboardTags();
         if (playerTags.contains(Tags.INGAME)
-                && event.getPacket().getSoundEffects().readSafely(0) == Sound.ITEM_ARMOR_EQUIP_GENERIC) {
+                && e.getPacket().getSoundEffects().readSafely(0) == Sound.ITEM_ARMOR_EQUIP_GENERIC) {
 
-            event.setCancelled(true);
+            e.setCancelled(true);
 
+        }
+        if (e.getPacket().getSoundCategories().readSafely(0) == SoundCategory.PLAYERS) {
+            Location packetLoc = new Location(e.getPlayer().getWorld(), (e.getPacket().getIntegers().read(0) / 8.0),
+                    (e.getPacket().getIntegers().read(1) / 8.0), (e.getPacket().getIntegers().read(2) / 8.0));
+
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                Location playerLoc = player.getLocation();
+                if (player.getScoreboardTags().contains("au_dead") && playerLoc.distance(packetLoc) < 0.5)
+                    e.setCancelled(true);
+            }
         }
     }
 }
