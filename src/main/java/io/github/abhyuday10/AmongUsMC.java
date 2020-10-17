@@ -7,6 +7,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import io.github.abhyuday10.events.GenericEvents;
+import io.github.abhyuday10.events.JoinEvent;
 import io.github.abhyuday10.events.RightClickEvents;
 import io.github.abhyuday10.packets.EntityEquipmentListener;
 import io.github.abhyuday10.packets.NamedSoundListener;
@@ -29,6 +30,10 @@ public class AmongUsMC extends JavaPlugin {
         protocolManager = ProtocolLibrary.getProtocolManager();
         protocolManager.addPacketListener(new EntityEquipmentListener(this));
         protocolManager.addPacketListener(new NamedSoundListener(this));
+
+        // BukkitScheduler scheduler = getServer().getScheduler();
+        // scheduler.scheduleSyncRepeatingTask(this, new CheckAndHidePlayers(), 0L,
+        // 20L);
 
     }
 
