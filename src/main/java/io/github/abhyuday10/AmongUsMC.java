@@ -26,6 +26,7 @@ public class AmongUsMC extends JavaPlugin {
         PluginManager manager = getServer().getPluginManager();
         manager.registerEvents(new GenericEvents(), this);
         manager.registerEvents(new RightClickEvents(), this);
+        manager.registerEvents(new JoinEvent(), this);
 
         protocolManager = ProtocolLibrary.getProtocolManager();
         protocolManager.addPacketListener(new EntityEquipmentListener(this));
