@@ -16,8 +16,7 @@ import org.bukkit.entity.Player;
 import io.github.abhyuday10.AmongUsMC;
 import io.github.abhyuday10.Tags;
 
-// Listener that prevents ingame players from hearing sound when assigning map
-// to player's offhand1
+
 public class NamedSoundListener extends PacketAdapter {
     public NamedSoundListener(AmongUsMC plugin) {
         super(plugin, ListenerPriority.NORMAL, PacketType.Play.Server.NAMED_SOUND_EFFECT);
@@ -27,12 +26,15 @@ public class NamedSoundListener extends PacketAdapter {
     public void onPacketSending(PacketEvent e) {
         Player receiver = e.getPlayer();
         Set<String> playerTags = receiver.getScoreboardTags();
+        // prevents ingame players from hearing sound when assigning map
+        // to player's offhand1
         if (playerTags.contains(Tags.INGAME)
                 && e.getPacket().getSoundEffects().readSafely(0) == Sound.ITEM_ARMOR_EQUIP_GENERIC) {
 
             e.setCancelled(true);
 
         }
+        // Silence sounds if dead player is very close: probably a dead player sound
         if (e.getPacket().getSoundCategories().readSafely(0) == SoundCategory.PLAYERS) {
             Location packetLoc = new Location(e.getPlayer().getWorld(), (e.getPacket().getIntegers().read(0) / 8.0),
                     (e.getPacket().getIntegers().read(1) / 8.0), (e.getPacket().getIntegers().read(2) / 8.0));
